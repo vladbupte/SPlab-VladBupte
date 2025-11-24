@@ -1,0 +1,22 @@
+
+<!doctype html>
+<html lang="en">
+<body>
+<h1>All Books (SSE)</h1>
+<a href="javascript:void(0)" onclick="connect()">Connect SSE</a>
+<div id="sseDiv"></div>
+<script>
+function connect() {
+  if(typeof(EventSource) !== "undefined") {
+    const source = new EventSource('/books-sse');
+    source.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      document.getElementById("sseDiv").innerHTML += "Book ID: " + data.id + " Title: " + data.title + "<br>";
+    };
+  } else {
+    document.getElementById("sseDiv").innerHTML = "Your browser does not support server-sent events.";
+  }
+}
+</script>
+</body>
+</html>
